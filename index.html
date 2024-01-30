@@ -6,9 +6,102 @@
     <title>Poké-Search</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="./dist/output.css">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 </head>
-<body>
-    
+<body class="font-text bg-[#F9EFDB] space-y-10">
+
+    <nav class="flex ml-5">
+        <p class="text-7xl my-auto">POKÉ-SEARCH</p>
+        <input class="w-96 h-10 rounded-xl my-auto" type="search" onclick="searchPokemon()" placeholder="SEARCH POKEMON NAME OR NO.">
+            <button class="w-52" type="button" data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example" data-drawer-placement="right" aria-controls="drawer-right-example">
+                <img src="./assets/Heart.png" alt="Heart Favorite Button">
+            </button>
+
+            <div id="drawer-right-example" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-[#D68A9C] w-screen md:w-80" tabindex="-1" aria-labelledby="drawer-right-label">
+                <button type="button" data-drawer-hide="drawer-right-example" aria-controls="drawer-right-example" class="text-black bg-transparent rounded-lg text-sm w-10 h-10 absolute top-2.5 inline-flex items-center justify-center dark:hover:bg-rose-300">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close menu</span>
+                 </button>
+                <h5 id="drawer-right-label" class="flex justify-center items-center mb-4 text-3xl font-semibold text-black">FAVORITES</h5>
+        
+               <div class="columns-1">
+                  
+               </div>
+            </div>
+    </nav>
+
+    <div class="columns-2 mt-10">
+        <div class="text-center space-y-3 text-3xl">
+            <p id="pokeName">BULBASAUR NO.1</p>
+            <div class="flex justify-center space-x-3">
+                <p id="skin">SKIN</p>
+                <button class="w-5" id="changeSkinBtn">
+                    <img src="./assets/Vector (1).png" alt="Change Button">
+                </button>
+             </div>
+            <img class="mx-auto" id="pokemonDisplay" src="./assets/bulbasaur 1.png" alt="Pokemon Image">
+        </div>
+        <div>
+            <button class="bg-[#ACC3EF] w-5/12 py-4 mr-2 rounded-xl" id="favPokemon" onclick="favPokemon()">
+                FAVORITE CURRENT POKEMON
+            </button>
+            <button class="bg-[#ACC3EF] w-5/12 py-4 ml-2 rounded-xl" id="pickRandom" onclick="pickRandom()">
+                PICK RANDOM POKEMON
+            </button>
+            <div class="bg-[#f5f5f5] border-black border-[3px] rounded-xl p-6 w-[640px] text-3xl mt-5 h-80">
+                <p class="text-4xl">BASE STATS:</p>
+                <div id="stats" class="columns-2 mt-5 ml-2">
+                    <div>
+                        <p id="hp">HP- 45</p>
+                        <br>
+                        <p id="atk">ATK- 49</p>
+                        <br>
+                        <p id="def">DEF- 49</p>
+                    </div>
+                    <div>
+                        <p id="spAtk">SP. ATK- 65</p>
+                         <br>
+                        <p id="spDef">SP. DEF- 65</p>
+                        <br>
+                        <p id="spd">SPD- 45</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="columns-2">
+        <div class="bg-[#f5f5f5] border-black border-[3px] rounded-xl p-6 text-3xl mt-3 h-80 w-[650px] ml-20 space-y-6 py-12" id="info">
+            <p>TYPE: <span id="typeText"></span></p>
+            <p>LOCATION:</p>
+            <p>WEIGHT: </p>
+            <p>HEIGHT: </p>
+        </div>
+    <div class="flex space-x-4">
+        <div class="bg-[#f5f5f5] border-black border-[3px] rounded-xl p-6 text-3xl mt-3 h-80 w-5/12" id="moves">
+            <p>MOVES:</p>
+        </div>
+        <div class="bg-[#f5f5f5] border-black border-[3px] rounded-xl p-6 text-3xl mt-3 h-80 w-5/12" id="abilities">
+            <p>ABILITIES:</p>
+            <p id="ability1">OverGrow</p>
+            <p id="ability2">Chlorophyll</p>
+            <p id="hiddenAbility"></p>
+        </div>
+    </div>
+    </div>
+
+    <div class="columns-1">
+        <div class="bg-[#f5f5f5] border-black border-[3px] rounded-xl p-6 text-3xl mt-3 h-80 w-[88%] ml-20 text-center mb-10" id="evolutions">
+            <p>EVOLUTIONS</p>
+            <span id="evolutionChart"></span>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
 </body>
 </html>
