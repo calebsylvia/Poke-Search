@@ -1,3 +1,6 @@
+import { getLocal, saveLocal, removeLocal } from "./ls.js";
+
+
 let searchBar = document.getElementById("searchBar");
 let pokeName = document.getElementById("pokeName");
 let skin = document.getElementById("skin");
@@ -22,6 +25,7 @@ let moves = document.getElementById("moves");
 let ability1 = document.getElementById("ability1");
 let ability2 = document.getElementById("ability2");
 let hiddenAbility = document.getElementById("hiddenAbility");
+let evolutions = document.getElementById("evolutions");
 let evolutionChart = document.getElementById("evolutionChart");
 let firstEvolution = document.getElementById("firstEvolution");
 let firstEvoImg = document.getElementById("firstEvoImg");
@@ -30,6 +34,9 @@ let data;
 let normalSrc;
 let shinySrc;
 let evoData;
+
+
+
 
 
 async function apiCall(pokemon){
@@ -151,12 +158,12 @@ async function apiCall(pokemon){
                 break;
             case "fighting":
                 span.textContent = "FIGHTING";
-                span.className = "bg-green-600 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5";
+                span.className = "bg-red-900 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5 text-white";
                 type.appendChild(span);
                 break;
             case "fairy":
                 span.textContent = "FAIRY";
-                span.className = "bg-green-600 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5";
+                span.className = "bg-pink-500 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5";
                 type.appendChild(span);
                 break;
             case "flying":
@@ -224,7 +231,18 @@ async function apiCall(pokemon){
         console.log(evoArr);
         for(let i = 0; i < evoArr.length; i++){
             evoCall(evoArr[i]);
-            console.log(evoArr[i]);
+        }
+
+        if(evoArr.length > 4){
+            evolutions.classList.toggle("lg:h-[450px]");
+            evolutions.classList.toggle("lg:h-80");
+            evolutions.classList.toggle("md:h-[1750px]");
+            evolutions.classList.toggle("md:h-[750px]");
+        }else if(evoArr.length <= 4 && evolutions.classList.contains("lg:h-[450px]")){
+            evolutions.classList.remove("lg:h-[450px]");
+            evolutions.classList.toggle("lg:h-80");
+            evolutions.classList.remove("md:h-[1750px]");
+            evolutions.classList.toggle("md:h-[750px]");
         }
       }
 
@@ -238,6 +256,7 @@ async function apiCall(pokemon){
             let evoDiv = document.createElement("div");
             let evoName = document.createElement("evoName");
 
+            
             evoImg.src = evoData.sprites.other["showdown"].front_default;
             evoImg.className = "mx-auto w-28 h-28 pb-3";
             evoDiv.className = "mt-10";
@@ -255,14 +274,14 @@ async function apiCall(pokemon){
 
     favList.addEventListener('click', () => {
         let favorites = getLocal();
-
+        console.log(favorites);
         favCol.innerHTML = "";
 
         favorites.map(pokeNames => {
 
         let favDiv = document.createElement("div");
         let favName = document.createElement("p");
-        let changeTo = document.createElement("button")
+        let changeTo = document.createElement("button");
         let removeFav = document.createElement("button");
         let btnImg = document.createElement("img");
 
@@ -276,20 +295,22 @@ async function apiCall(pokemon){
         btnImg.className = "w-8";
 
         removeFav.addEventListener('click', () => {
-            removeLocal(pokeData.name);
-
+            removeLocal(favName.innerText.toLowerCase());
+            favorites = getLocal();
             favDiv.remove();
         })
 
-        removeFav.appendChild(btnImg);
-        favDiv.appendChild(favName);
-        favDiv.appendChild(removeFav);
+        removeFav.append(btnImg);
+        favDiv.append(favName);
+        favDiv.append(removeFav);
         favCol.appendChild(favDiv);
         })
     })
+    
+}
+}
 
-}
-}
+
 
 searchBar.addEventListener('keypress', (e) => {
     if(e.key === 'Enter'){
@@ -315,35 +336,6 @@ changeSkinBtn.addEventListener('click', () => {
 });
 
 
-
-// Favorite
-
-const saveLocal = (pokemon) => {
-    let favorites = getLocal();
-
-    if(!favorites.includes(pokemon)){
-        favorites.push(pokemon);
-    }
-    localStorage.setItem("Favorites", JSON.stringify(favorites));
-}
-
-const getLocal = () => {
-    let localData = localStorage.getItem("Favorites");
-
-    if(localData == null){
-        return [];
-    }
-    return JSON.parse(localData);
-}
-
-const removeLocal = (pokemon) => {
-        let favorites = getLocal();
-        let index = favorites.indexOf(pokemon);
-    
-        favorites.splice(index, 1);
-    
-        localStorage.setItem("Favorites", JSON.stringify(favorites))
-}
 
 
 window.onload(apiCall(1));
