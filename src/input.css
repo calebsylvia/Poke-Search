@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+.center{
+    text-align: center;
+}

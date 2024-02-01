@@ -4,6 +4,8 @@ let skin = document.getElementById("skin");
 let changeSkinBtn = document.getElementById("changeSkinBtn");
 let pokemonDisplay = document.getElementById("pokemonDisplay");
 let favPokemon = document.getElementById("favPokemon");
+let favList = document.getElementById("favList");
+let favCol = document.getElementById("favCol");
 let pickRandom = document.getElementById("pickRandom");
 let type = document.getElementById("type");
 let hp = document.getElementById("hp");
@@ -21,13 +23,19 @@ let ability1 = document.getElementById("ability1");
 let ability2 = document.getElementById("ability2");
 let hiddenAbility = document.getElementById("hiddenAbility");
 let evolutionChart = document.getElementById("evolutionChart");
+let firstEvolution = document.getElementById("firstEvolution");
+let firstEvoImg = document.getElementById("firstEvoImg");
 let shiny = false;
 let data;
 let normalSrc;
 let shinySrc;
+let evoData;
+
 
 async function apiCall(pokemon){
 
+
+    evolutionChart.innerHTML = "";
     searchBar.value = "";
 
     const prom = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
@@ -49,16 +57,10 @@ async function apiCall(pokemon){
             habitat.textContent = "LOCATION: N/A";
         }
 
-    // const evolProm = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemon}/`);
-    // const evolResp = await evolProm.json();
-
-    // let evoURL = evolResp.evolution_chain.url;
-
-    
-    
     
 
     pokeName.textContent = `${pokeData.name.toUpperCase()} NO. ${pokeData.id}`;
+    let currentPokemon = pokeData.name.toUpperCase();
     pokemonDisplay.src = pokeData.sprites.other["official-artwork"].front_default;
 
     normalSrc = pokeData.sprites.other["official-artwork"].front_default;
@@ -199,6 +201,92 @@ async function apiCall(pokemon){
 
     }
 
+    const specProm = await fetch(`${pokeData.species.url}`);
+    const specResp = await specProm.json();
+    console.log(specResp);
+
+    const evoChain = await fetch(`${specResp.evolution_chain.url}`);
+    const evoResp = await evoChain.json();
+    console.log(evoResp);
+
+    if (evoResp.chain.evolves_to.length === 0) {
+        evolutionChart.textContent = "N/A";
+      } else {
+        const evoArr = [evoResp.chain.species.name];
+        const evoIt = (chain) => {
+          if (chain.evolves_to.length === 0) return;
+          chain.evolves_to.forEach((evo) => {
+            evoArr.push(evo.species.name);
+            evoIt(evo);
+          });
+        };
+        evoIt(evoResp.chain);
+        console.log(evoArr)
+        for(let i = 0; i < evoArr.length; i++){
+            evoCall(evoArr[i]);
+            console.log(evoArr[i])
+            console.log("i work")
+        }
+      }
+
+
+
+    let evoDiv = document.createElement("div");
+    let evoName = document.createElement("p");
+    let evoImg = document.createElement("img");
+    let arrowImg = document.createElement("img");
+
+    async function evoCall(name){
+        const evoProm = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+        const evoData = await evoProm.json();
+        evoImg.src = evoData.sprites.other["showdown"].front_default;
+        evoImg.className = "mx-auto w-28 pb-3";
+        evoDiv.className = "mt-10"
+        evoDiv.appendChild(evoImg);
+        evoDiv.appendChild(evoName);
+        evoName.textContent = evoData.name.toUpperCase();
+        evolutionChart.appendChild(evoDiv);
+    }
+
+
+
+    favPokemon.addEventListener('click', (e) => {
+        saveLocal(pokeData.name);
+    });
+
+    favList.addEventListener('click', () => {
+        let favorites = getLocal();
+
+        favCol.innerHTML = "";
+
+        favorites.map(pokeNames => {
+
+        let favDiv = document.createElement("div");
+        let favName = document.createElement("p");
+        let removeFav = document.createElement("button");
+        let btnImg = document.createElement("img");
+
+    
+        favDiv.className = "flex bg-white rounded-xl py-5 px-3 relative";
+        favName.className = "my-auto text-xl";
+        favName.innerText = pokeNames.toUpperCase();
+        removeFav.type = "button";
+        removeFav.className = "absolute right-2 top-4";
+        btnImg.src = "./assets/MinusCircle.png";
+        btnImg.className = "w-8";
+
+        removeFav.addEventListener('click', () => {
+            removeLocal(pokeData.name);
+
+            favDiv.remove();
+        })
+
+        removeFav.appendChild(btnImg);
+        favDiv.appendChild(favName);
+        favDiv.appendChild(removeFav);
+        favCol.appendChild(favDiv);
+        })
+    })
 
 }
 }
@@ -218,15 +306,45 @@ pickRandom.addEventListener('click', (e) => {
 
 changeSkinBtn.addEventListener('click', () => {
     if(!shiny){
-        console.log("im shiny")
         shiny = true;
         pokemonDisplay.src = shinySrc;
     }else{
-        console.log('im not shiny');
         shiny = false;
         pokemonDisplay.src = normalSrc;
     }
 });
+
+
+
+// Favorite
+
+const saveLocal = (pokemon) => {
+    let favorites = getLocal();
+
+    if(!favorites.includes(pokemon)){
+        favorites.push(pokemon);
+    }
+    localStorage.setItem("Favorites", JSON.stringify(favorites));
+}
+
+const getLocal = () => {
+    let localData = localStorage.getItem("Favorites");
+
+    if(localData == null){
+        return [];
+    }
+    return JSON.parse(localData);
+}
+
+const removeLocal = (pokemon) => {
+        let favorites = getLocal();
+        let index = favorites.indexOf(pokemon);
+    
+        favorites.splice(index, 1);
+    
+        localStorage.setItem("Favorites", JSON.stringify(favorites))
+}
+
 
 window.onload(apiCall(1));
 
