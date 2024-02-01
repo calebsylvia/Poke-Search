@@ -282,7 +282,7 @@ async function apiCall(pokemon){
         favName.innerText = pokeNames.toUpperCase();
         removeFav.type = "button";
         removeFav.className = "absolute right-2 top-4";
-        btnImg.src = "./assets/MinusCircle.png";
+        btnImg.src = "../assets/MinusCircle.png";
         btnImg.className = "w-8";
 
         removeFav.addEventListener('click', () => {
@@ -333,6 +333,6 @@ changeSkinBtn.addEventListener('click', () => {
 
 
 
-// window.onload(apiCall(1));
+window.onload(apiCall(1));
 
 
