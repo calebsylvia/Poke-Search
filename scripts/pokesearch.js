@@ -111,87 +111,87 @@ async function apiCall(pokemon){
         switch(pokeData.types[j].type.name){
             case "grass":
                 span.textContent = "GRASS";
-                span.className = "bg-green-600 rounded-lg py-2 px-4 my-auto ml-5";
+                span.className = "bg-green-600 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5";
                 type.appendChild(span);
                 break;
             case "fire":
                 span.textContent = "FIRE";
-                span.className = "bg-red-600 rounded-lg py-2 px-4 my-auto ml-5";
+                span.className = "bg-red-600 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5";
                 type.appendChild(span);
                 break;
             case "water":
                 span.textContent = "WATER";
-                span.className = "rounded-lg py-2 px-4 my-auto ml-5 bg-blue-500 text-white";
+                span.className = "rounded-lg py-2 px-4 my-auto ml-3 md:ml-5 bg-blue-500 text-white";
                 type.appendChild(span);
                 break;
             case "rock":
                 span.textContent = "ROCK";
-                span.className = "rounded-lg py-2 px-4 my-auto ml-5 bg-amber-900 text-white";
+                span.className = "rounded-lg py-2 px-4 my-auto ml-3 md:ml-5 bg-amber-900 text-white";
                 type.appendChild(span);
                 break;
             case "electric":
                 span.textContent = "ELECTRIC";
-                span.className = "bg-yellow-500 rounded-lg py-2 px-4 my-auto ml-5";
+                span.className = "bg-yellow-500 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5";
                 type.appendChild(span);
                 break;
             case "dragon":
                 span.textContent = "DRAGON";
-                span.className = "bg-sky-950 rounded-lg py-2 px-4 my-auto ml-5 text-white";
+                span.className = "bg-sky-950 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5 text-white";
                 type.appendChild(span);
                 break;
             case "bug":
                 span.textContent = "BUG";
-                span.className = "bg-green-900 rounded-lg py-2 px-4 my-auto ml-5 text-white";
+                span.className = "bg-green-900 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5 text-white";
                 type.appendChild(span);
                 break;
             case "dark": 
                 span.textContent = "DARK";
-                span.className = "bg-green-600 rounded-lg py-2 px-4 my-auto ml-5";
+                span.className = "bg-green-600 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5";
                 type.appendChild(span);
                 break;
             case "fighting":
                 span.textContent = "FIGHTING";
-                span.className = "bg-green-600 rounded-lg py-2 px-4 my-auto ml-5";
+                span.className = "bg-green-600 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5";
                 type.appendChild(span);
                 break;
             case "fairy":
                 span.textContent = "FAIRY";
-                span.className = "bg-green-600 rounded-lg py-2 px-4 my-auto ml-5";
+                span.className = "bg-green-600 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5";
                 type.appendChild(span);
                 break;
             case "flying":
                 span.textContent = "FLYING";
-                span.className = "bg-sky-300 rounded-lg py-2 px-4 my-auto ml-5";
+                span.className = "bg-sky-300 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5";
                 type.appendChild(span);
                 break;
             case "ghost":
                 span.textContent = "GHOST";
-                span.className = "bg-violet-950 rounded-lg py-2 px-4 my-auto ml-5 text-white";
+                span.className = "bg-violet-950 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5 text-white";
                 type.appendChild(span);
                 break;
             case "ice":
                 span.textContent = "ICE";
-                span.className = "bg-cyan-200 rounded-lg py-3 px-4 my-auto ml-5";
+                span.className = "bg-cyan-200 rounded-lg py-3 px-4 my-auto ml-3 md:ml-5";
                 type.appendChild(span);
                 break;
             case "normal":
                 span.textContent = "NORMAL";
-                span.className = "bg-gray-300 rounded-lg py-2 px-4 my-auto ml-5 text-black";
+                span.className = "bg-gray-300 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5 text-black";
                 type.appendChild(span);
                 break;
             case "poison":
                 span.textContent = "POISON";
-                span.className = "bg-violet-400 rounded-lg py-2 px-4 my-auto ml-5";
+                span.className = "bg-violet-400 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5";
                 type.appendChild(span);
                 break;
             case "psychic":
                 span.textContent = "PSYCHIC";
-                span.className = "bg-fuchsia-500 rounded-lg py-2 px-4 my-auto ml-5";
+                span.className = "bg-fuchsia-500 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5";
                 type.appendChild(span);
                 break;
             case "steel":
                 span.textContent = "STEEL";
-                span.className = "bg-neutral-600 rounded-lg py-2 px-4 my-auto ml-5 text-white";
+                span.className = "bg-neutral-600 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5 text-white";
                 type.appendChild(span);
                 break;
             default:
@@ -221,31 +221,30 @@ async function apiCall(pokemon){
           });
         };
         evoIt(evoResp.chain);
-        console.log(evoArr)
+        console.log(evoArr);
         for(let i = 0; i < evoArr.length; i++){
             evoCall(evoArr[i]);
-            console.log(evoArr[i])
-            console.log("i work")
+            console.log(evoArr[i]);
         }
       }
 
+      
 
+        async function evoCall(name){
+            const evoProm = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+            const evoData = await evoProm.json();
 
-    let evoDiv = document.createElement("div");
-    let evoName = document.createElement("p");
-    let evoImg = document.createElement("img");
-    let arrowImg = document.createElement("img");
+            let evoImg = document.createElement("img");
+            let evoDiv = document.createElement("div");
+            let evoName = document.createElement("evoName");
 
-    async function evoCall(name){
-        const evoProm = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
-        const evoData = await evoProm.json();
-        evoImg.src = evoData.sprites.other["showdown"].front_default;
-        evoImg.className = "mx-auto w-28 pb-3";
-        evoDiv.className = "mt-10"
-        evoDiv.appendChild(evoImg);
-        evoDiv.appendChild(evoName);
-        evoName.textContent = evoData.name.toUpperCase();
-        evolutionChart.appendChild(evoDiv);
+            evoImg.src = evoData.sprites.other["showdown"].front_default;
+            evoImg.className = "mx-auto w-28 h-28 pb-3";
+            evoDiv.className = "mt-10";
+            evoDiv.appendChild(evoImg);
+            evoDiv.appendChild(evoName);
+            evoName.textContent = evoData.name.toUpperCase();
+            evolutionChart.appendChild(evoDiv);
     }
 
 
@@ -263,6 +262,7 @@ async function apiCall(pokemon){
 
         let favDiv = document.createElement("div");
         let favName = document.createElement("p");
+        let changeTo = document.createElement("button")
         let removeFav = document.createElement("button");
         let btnImg = document.createElement("img");
 
