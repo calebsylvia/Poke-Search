@@ -272,7 +272,6 @@ async function apiCall(pokemon){
 
         let favDiv = document.createElement("div");
         let favName = document.createElement("p");
-        let changeTo = document.createElement("button");
         let removeFav = document.createElement("button");
         let btnImg = document.createElement("img");
 
