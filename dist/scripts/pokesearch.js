@@ -284,6 +284,10 @@ async function apiCall(pokemon){
         btnImg.src = "../assets/MinusCircle.png";
         btnImg.className = "w-8";
 
+        favName.addEventListener('click', () => {
+            apiCall(favName.innerText.toLowerCase());
+        });
+
         removeFav.addEventListener('click', () => {
             removeLocal(favName.innerText.toLowerCase());
             favorites = getLocal();
