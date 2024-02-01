@@ -3,7 +3,6 @@ import { getLocal, saveLocal, removeLocal } from "./ls.js";
 
 let searchBar = document.getElementById("searchBar");
 let pokeName = document.getElementById("pokeName");
-let skin = document.getElementById("skin");
 let changeSkinBtn = document.getElementById("changeSkinBtn");
 let pokemonDisplay = document.getElementById("pokemonDisplay");
 let favPokemon = document.getElementById("favPokemon");
@@ -17,7 +16,6 @@ let def = document.getElementById("def");
 let spAtk = document.getElementById("spAtk");
 let spDef = document.getElementById("spDef");
 let spd = document.getElementById("spd");
-let typeText = document.getElementById("typeText");
 let habitat = document.getElementById("habitat");
 let weight = document.getElementById("weight");
 let height = document.getElementById("height");
@@ -27,16 +25,13 @@ let ability2 = document.getElementById("ability2");
 let hiddenAbility = document.getElementById("hiddenAbility");
 let evolutions = document.getElementById("evolutions");
 let evolutionChart = document.getElementById("evolutionChart");
-let firstEvolution = document.getElementById("firstEvolution");
-let firstEvoImg = document.getElementById("firstEvoImg");
 let shiny = false;
-let data;
 let normalSrc;
 let shinySrc;
-let evoData;
 
 
 
+let oik;
 
 
 async function apiCall(pokemon){
@@ -47,8 +42,9 @@ async function apiCall(pokemon){
 
     const prom = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
     const pokeData = await prom.json();
-    
+    oik = pokeData;
     console.log(pokeData);
+    
 
     if(pokeData.id >= 650){
         alert("Please enter Pokemon up to Generation 5.");
@@ -210,11 +206,11 @@ async function apiCall(pokemon){
 
     const specProm = await fetch(`${pokeData.species.url}`);
     const specResp = await specProm.json();
-    console.log(specResp);
+    
 
     const evoChain = await fetch(`${specResp.evolution_chain.url}`);
     const evoResp = await evoChain.json();
-    console.log(evoResp);
+    
 
     if (evoResp.chain.evolves_to.length === 0) {
         evolutionChart.textContent = "N/A";
@@ -228,7 +224,7 @@ async function apiCall(pokemon){
           });
         };
         evoIt(evoResp.chain);
-        console.log(evoArr);
+        
         for(let i = 0; i < evoArr.length; i++){
             evoCall(evoArr[i]);
         }
@@ -266,11 +262,6 @@ async function apiCall(pokemon){
             evolutionChart.appendChild(evoDiv);
     }
 
-
-
-    favPokemon.addEventListener('click', (e) => {
-        saveLocal(pokeData.name);
-    });
 
     favList.addEventListener('click', () => {
         let favorites = getLocal();
@@ -310,6 +301,10 @@ async function apiCall(pokemon){
 }
 }
 
+favPokemon.addEventListener('click', (e) => {
+    saveLocal(oik.name);
+});
+
 
 
 searchBar.addEventListener('keypress', (e) => {
@@ -338,6 +333,6 @@ changeSkinBtn.addEventListener('click', () => {
 
 
 
-window.onload(apiCall(1));
+// window.onload(apiCall(1));
 
 

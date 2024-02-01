@@ -1,11 +1,13 @@
 
 
 const saveLocal = (pokemon) => {
+    console.log(pokemon);
     let favorites = getLocal();
 
     if(!favorites.includes(pokemon)){
         favorites.push(pokemon);
     }
+
     localStorage.setItem("Favorites", JSON.stringify(favorites));
 }
 
