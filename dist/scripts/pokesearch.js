@@ -298,7 +298,7 @@ async function apiCall(pokemon){
 
 
         removeFav.append(btnImg);
-        changeTo.appendChild(favName)
+        changeTo.appendChild(favName);
         favDiv.append(changeTo);
         favDiv.append(removeFav);
         favCol.appendChild(favDiv);
