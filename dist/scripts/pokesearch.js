@@ -272,6 +272,7 @@ async function apiCall(pokemon){
 
         let favDiv = document.createElement("div");
         let favName = document.createElement("p");
+        let changeTo = document.createElement("button");
         let removeFav = document.createElement("button");
         let btnImg = document.createElement("img");
 
@@ -284,8 +285,8 @@ async function apiCall(pokemon){
         btnImg.src = "../assets/MinusCircle.png";
         btnImg.className = "w-8";
 
-        favName.addEventListener('click', () => {
-            apiCall(favName.innerText.toLowerCase());
+        changeTo.addEventListener('click', () => {
+            apiCall(pokeNames.toLowerCase());
         });
 
         removeFav.addEventListener('click', () => {
@@ -294,8 +295,11 @@ async function apiCall(pokemon){
             favDiv.remove();
         })
 
+
+
         removeFav.append(btnImg);
-        favDiv.append(favName);
+        changeTo.appendChild(favName)
+        favDiv.append(changeTo);
         favDiv.append(removeFav);
         favCol.appendChild(favDiv);
         })
