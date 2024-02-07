@@ -149,7 +149,7 @@ async function apiCall(pokemon){
                 break;
             case "dark": 
                 span.textContent = "DARK";
-                span.className = "bg-green-600 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5";
+                span.className = "bg-gray-900 rounded-lg py-2 px-4 my-auto ml-3 md:ml-5 text-white";
                 type.appendChild(span);
                 break;
             case "fighting":
